@@ -1,4 +1,5 @@
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { CartProvider } from './contexts/CartContext';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
@@ -6,9 +7,16 @@ import ProductPage from './pages/ProductPage';
 import CartPage from './pages/CartPage';
 import AccountPage from './pages/AccountPage';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
+
 export default function App() {
   return (
     <HashRouter>
+      <ScrollToTop />
       <CartProvider>
         <div className="min-h-screen bg-gray-950 text-white">
           <Header />
