@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { CartProvider } from './contexts/CartContext';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
@@ -8,7 +8,7 @@ import AccountPage from './pages/AccountPage';
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <CartProvider>
         <div className="min-h-screen bg-gray-950 text-white">
           <Header />
@@ -89,6 +89,6 @@ export default function App() {
           </footer>
         </div>
       </CartProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
