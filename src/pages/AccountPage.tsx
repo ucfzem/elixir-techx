@@ -2,14 +2,8 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { User, Mail, MapPin, Calendar, Users, Crown, ShoppingBag, TrendingUp } from 'lucide-react';
-
-interface Customer {
-  id: number;
-  name: string;
-  email: string;
-  address: string;
-  created_at: string;
-}
+import { fetchCustomers } from '../data/api';
+import type { Customer } from '../data/customers';
 
 export default function AccountPage() {
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -17,8 +11,7 @@ export default function AccountPage() {
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
 
   useEffect(() => {
-    fetch('/api/customers')
-      .then(res => res.json())
+    fetchCustomers()
       .then(data => {
         setCustomers(data);
         if (data.length > 0) setSelectedCustomer(data[0]);

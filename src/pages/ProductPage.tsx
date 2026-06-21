@@ -5,17 +5,8 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ShoppingCart, Package, Clock, ChevronRight, Check, Star, Shield, Truck, RotateCcw } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 import ProductCard from '../components/ProductCard';
-
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  image_url: string;
-  stock: number;
-  category: string;
-  created_at: string;
-}
+import { fetchProduct, fetchProducts } from '../data/api';
+import type { Product } from '../data/products';
 
 export default function ProductPage() {
   const { id } = useParams<{ id: string }>();
@@ -27,23 +18,22 @@ export default function ProductPage() {
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const loadProduct = async () => {
       try {
-        const res = await fetch(`/api/products/${id}`);
-        const data = await res.json();
+        const data = await fetchProduct(id!);
         setProduct(data);
 
-        // Fetch related products (same category)
-        const relatedRes = await fetch(`/api/products?category=${data.category}`);
-        const relatedData = await relatedRes.json();
-        setRelatedProducts(relatedData.filter((p: Product) => p.id !== data.id).slice(0, 4));
+        if (data) {
+          const allProducts = await fetchProducts({ category: data.category });
+          setRelatedProducts(allProducts.filter(p => p.id !== data.id).slice(0, 4));
+        }
       } catch (err) {
         console.error('Error:', err);
       } finally {
         setLoading(false);
       }
     };
-    fetchProduct();
+    loadProduct();
   }, [id]);
 
   const handleAddToCart = () => {

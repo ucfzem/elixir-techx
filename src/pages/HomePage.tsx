@@ -2,17 +2,8 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, SlidersHorizontal, ArrowUpDown, Sparkles, Zap, Shield, Truck } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
-
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  image_url: string;
-  stock: number;
-  category: string;
-  created_at: string;
-}
+import { fetchProducts } from '../data/api';
+import type { Product } from '../data/products';
 
 const categories = ['all', 'Smartphones', 'Ordinateurs', 'Casques', 'Montres', 'Consoles', 'Accessoires'];
 const sortOptions = [
@@ -30,16 +21,10 @@ export default function HomePage() {
   const [sort, setSort] = useState('newest');
   const [showFilters, setShowFilters] = useState(false);
 
-  const fetchProducts = async () => {
+  const loadProducts = async () => {
     setLoading(true);
     try {
-      const params = new URLSearchParams();
-      if (category !== 'all') params.set('category', category);
-      if (sort) params.set('sort', sort);
-      if (search) params.set('search', search);
-      
-      const res = await fetch(`/api/products?${params.toString()}`);
-      const data = await res.json();
+      const data = await fetchProducts({ category, sort, search });
       setProducts(data);
     } catch (err) {
       console.error('Error fetching products:', err);
@@ -49,13 +34,12 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    fetchProducts();
+    loadProducts();
   }, [category, sort]);
 
-  // Debounced search
   useEffect(() => {
     const timer = setTimeout(() => {
-      fetchProducts();
+      loadProducts();
     }, 400);
     return () => clearTimeout(timer);
   }, [search]);
