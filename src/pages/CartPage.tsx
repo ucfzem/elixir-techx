@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Minus, Plus, Trash2, ArrowLeft, CreditCard, Tag, Loader2, CheckCircle, LogIn } from 'lucide-react';
+import { ShoppingBag, Minus, Plus, Trash2, ArrowLeft, CreditCard, Tag, Loader2, CheckCircle, LogIn, Clock, FileText } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 import SEO from '../components/SEO';
 import { checkout } from '../data/api';
@@ -13,6 +13,7 @@ export default function CartPage() {
   const { items, removeFromCart, updateQuantity, clearCart, totalPrice, totalItems } = useCart();
   const [checkingOut, setCheckingOut] = useState(false);
   const [orderDone, setOrderDone] = useState(false);
+  const [orderId, setOrderId] = useState<number | null>(null);
   const [orderError, setOrderError] = useState('');
 
   const handleCheckout = async () => {
@@ -29,6 +30,7 @@ export default function CartPage() {
         customer
       );
       if (result.success) {
+        setOrderId(result.order.id);
         setOrderDone(true);
         clearCart();
       }
@@ -200,11 +202,25 @@ export default function CartPage() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="flex flex-col items-center gap-2 py-4"
+                  className="flex flex-col items-center gap-3 py-4"
                 >
                   <CheckCircle className="w-10 h-10 text-green-400" />
                   <span className="text-green-400 font-semibold">Commande confirmée !</span>
-                  <Link to="/" className="text-sm text-cyan-400 hover:underline">Continuer vos achats</Link>
+                  {orderId && (
+                    <div className="flex items-center gap-2 text-sm text-gray-400 bg-gray-900/50 rounded-xl px-4 py-2 border border-gray-800">
+                      <FileText className="w-4 h-4 text-cyan-400" />
+                      Commande #{orderId}
+                    </div>
+                  )}
+                  <div className="flex items-start gap-2 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-left w-full">
+                    <Clock className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+                    <p className="text-xs text-amber-300 leading-relaxed">
+                      <strong>Paiement en attente.</strong> Vous serez contacté pour finaliser le
+                      paiement. Les modes de paiement disponibles seront communiqués
+                      prochainement.
+                    </p>
+                  </div>
+                  <Link to="/" className="text-sm text-cyan-400 hover:underline font-medium">Continuer vos achats</Link>
                 </motion.div>
               ) : isSignedIn ? (
                 <motion.button

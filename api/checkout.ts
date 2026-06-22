@@ -20,7 +20,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const [order] = await sql`
       INSERT INTO orders (customer_name, customer_email, customer_address, total, status)
-      VALUES (${customer.name}, ${customer.email}, ${customer.address}, ${total}, 'confirmed')
+      VALUES (${customer.name}, ${customer.email}, ${customer.address}, ${total}, 'pending_payment')
       RETURNING id, customer_name, customer_email, total, status, created_at
     `;
 
