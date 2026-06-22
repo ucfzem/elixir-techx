@@ -133,6 +133,7 @@ export default function ProductPage() {
                 src={product.image_url}
                 alt={product.name}
                 className="w-full h-full object-cover"
+                onError={e => { (e.target as HTMLImageElement).src = '/images/placeholder.svg' }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-950/60 via-transparent to-transparent pointer-events-none" />
               

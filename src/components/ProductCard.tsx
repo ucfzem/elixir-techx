@@ -43,12 +43,9 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
   };
 
   const categoryColors: Record<string, string> = {
-    Smartphones: 'from-orange-500 to-red-600',
-    Ordinateurs: 'from-blue-500 to-indigo-600',
-    Casques: 'from-purple-500 to-pink-600',
-    Montres: 'from-green-500 to-emerald-600',
-    Consoles: 'from-yellow-500 to-orange-600',
-    Accessoires: 'from-cyan-500 to-teal-600',
+    'Tech & Gadgets': 'from-cyan-500 to-blue-600',
+    'Beauté & Bien-être': 'from-pink-500 to-rose-600',
+    'Maison & Cuisine': 'from-amber-500 to-orange-600',
   };
 
   const gradient = categoryColors[product.category] || 'from-gray-500 to-gray-600';
@@ -68,6 +65,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
               alt={product.name}
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               loading="lazy"
+              onError={e => { (e.target as HTMLImageElement).src = '/images/placeholder.svg' }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent" />
             

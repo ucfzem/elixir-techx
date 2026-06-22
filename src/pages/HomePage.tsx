@@ -6,7 +6,7 @@ import SEO from '../components/SEO';
 import { fetchProducts } from '../data/api';
 import type { Product } from '../data/products';
 
-const categories = ['all', 'Smartphones', 'Ordinateurs', 'Casques', 'Montres', 'Consoles', 'Accessoires'];
+const categories = ['all', 'Tech & Gadgets', 'Beauté & Bien-être', 'Maison & Cuisine'];
 const sortOptions = [
   { value: 'newest', label: 'Plus récents' },
   { value: 'price_asc', label: 'Prix croissant' },
@@ -49,9 +49,9 @@ export default function HomePage() {
     <div className="min-h-screen bg-gray-950">
       <SEO
         title="Accueil"
-        description="TechStore — Votre destination premium pour smartphones, ordinateurs, casques audio, montres connectées, consoles gaming et accessoires. Livraison 24-48h, garantie 2 ans."
+        description="Elixir Techx — Votre boutique en ligne de gadgets tech, beauté et maison à petits prix. Livraison au Maroc et en Europe."
         path="/"
-        keywords="tech store, high-tech, smartphones, ordinateurs, gaming, e-commerce, électronique, casques audio, montres connectées"
+        keywords="elixir techx, gadgets pas chers, tech, beauté, maison, cuisine, maroc, e-commerce, dropshipping"
       />
       {/* Hero Section */}
       <section className="relative pt-24 pb-12 overflow-hidden">
@@ -70,29 +70,29 @@ export default function HomePage() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-6">
               <Sparkles className="w-4 h-4 text-cyan-400" />
-              <span className="text-sm font-medium text-cyan-400">Tech Store — Votre destination High-Tech</span>
+              <span className="text-sm font-medium text-cyan-400">💰 Jusqu'à -80% vs les marques — Livraison Maroc & Europe</span>
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-4 leading-tight">
-              Découvrez la{' '}
+              Les meilleurs{' '}
               <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
-                Technologie
+                petits prix
               </span>{' '}
-              <br />de Demain
+              <br />Tech, Beauté & Maison
             </h1>
             
             <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-              Les derniers gadgets, smartphones, ordinateurs et accessoires tech au meilleur prix.
-              Livraison rapide & garantie 2 ans.
+              Des gadgets innovants, produits de beauté et accessoires maison à partir de 4,99€.
+              Livraison rapide au Maroc et en Europe.
             </p>
           </motion.div>
 
           {/* Features bar */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto mb-12">
             {[
-              { icon: Zap, label: 'Livraison Express', desc: '24-48h' },
-              { icon: Shield, label: 'Garantie 2 Ans', desc: 'Sérénité totale' },
-              { icon: Truck, label: 'Retour Gratuit', desc: '30 jours' },
+              { icon: Zap, label: 'Prix Mini', desc: 'À partir de 4,99€' },
+              { icon: Shield, label: 'Paiement Sécurisé', desc: 'Virement bancaire' },
+              { icon: Truck, label: 'Livraison Partout', desc: 'Maroc & Europe' },
             ].map((feat, i) => (
               <div key={i} className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gray-900/50 border border-gray-800/50">
                 <feat.icon className="w-5 h-5 text-cyan-400 shrink-0" />
