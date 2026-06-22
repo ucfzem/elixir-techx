@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, SlidersHorizontal, ArrowUpDown, Sparkles, Zap, Shield, Truck } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
+import SEO from '../components/SEO';
 import { fetchProducts } from '../data/api';
 import type { Product } from '../data/products';
 
@@ -46,6 +47,12 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gray-950">
+      <SEO
+        title="Accueil"
+        description="TechStore — Votre destination premium pour smartphones, ordinateurs, casques audio, montres connectées, consoles gaming et accessoires. Livraison 24-48h, garantie 2 ans."
+        path="/"
+        keywords="tech store, high-tech, smartphones, ordinateurs, gaming, e-commerce, électronique, casques audio, montres connectées"
+      />
       {/* Hero Section */}
       <section className="relative pt-24 pb-12 overflow-hidden">
         {/* Background effects */}

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, Minus, Plus, Trash2, ArrowLeft, CreditCard, Tag, Loader2, CheckCircle, LogIn } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
+import SEO from '../components/SEO';
 import { checkout } from '../data/api';
 import { useUser } from '@clerk/clerk-react';
 
@@ -41,6 +42,7 @@ export default function CartPage() {
   if (items.length === 0) {
     return (
       <div className="min-h-screen bg-gray-950 pt-24 flex flex-col items-center justify-center px-4">
+        <SEO title="Panier vide" description="Votre panier est vide. Découvrez notre sélection de produits high-tech." path="/cart" />
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -68,6 +70,7 @@ export default function CartPage() {
 
   return (
     <div className="min-h-screen bg-gray-950 pt-24 pb-16">
+      <SEO title="Panier" description="Votre panier TechStore — révisez vos articles avant de passer commande." path="/cart" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">

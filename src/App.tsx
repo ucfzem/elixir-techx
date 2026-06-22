@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { CartProvider } from './contexts/CartContext';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
@@ -17,6 +18,7 @@ function ScrollToTop() {
 
 export default function App() {
   return (
+    <HelmetProvider>
     <BrowserRouter>
       <ScrollToTop />
       <CartProvider>
@@ -102,5 +104,6 @@ export default function App() {
         </div>
       </CartProvider>
     </BrowserRouter>
+    </HelmetProvider>
   );
 }

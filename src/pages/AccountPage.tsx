@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { User, Mail, MapPin, Calendar, Crown, ShoppingBag, CreditCard, LogOut } from 'lucide-react';
 import { useUser, useAuth, SignedIn, SignedOut } from '@clerk/clerk-react';
 import { Link, useNavigate } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 export default function AccountPage() {
   const { user } = useUser();
@@ -19,6 +20,7 @@ export default function AccountPage() {
   return (
     <div className="min-h-screen bg-gray-950 pt-24 pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SEO title="Mon Compte" description="Gérez votre profil TechStore, vos commandes et vos informations personnelles." path="/account" />
         <SignedOut>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
