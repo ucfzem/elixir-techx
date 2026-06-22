@@ -6,6 +6,8 @@ import HomePage from './pages/HomePage';
 import ProductPage from './pages/ProductPage';
 import CartPage from './pages/CartPage';
 import AccountPage from './pages/AccountPage';
+import SignInPage from './pages/SignInPage';
+import SignUpPage from './pages/SignUpPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -26,6 +28,8 @@ export default function App() {
               <Route path="/product/:id" element={<ProductPage />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="/account" element={<AccountPage />} />
+              <Route path="/sign-in" element={<SignInPage />} />
+              <Route path="/sign-up" element={<SignUpPage />} />
             </Routes>
           </main>
 
@@ -97,6 +101,6 @@ export default function App() {
           </footer>
         </div>
       </CartProvider>
-    </HashRouter>
+    </BrowserRouter>
   );
 }

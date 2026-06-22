@@ -1,7 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Cpu, Menu, X } from 'lucide-react';
+import { ShoppingCart, Cpu, Menu, X, LogIn, UserPlus } from 'lucide-react';
 import { useState } from 'react';
 import { useCart } from '../contexts/CartContext';
+import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 
 export default function Header() {
   const { totalItems } = useCart();
@@ -43,6 +44,32 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
+            <SignedOut>
+              <Link
+                to="/sign-in"
+                className="flex items-center gap-1.5 text-sm font-medium text-gray-400 hover:text-cyan-400 transition-colors"
+              >
+                <LogIn className="w-4 h-4" />
+                Connexion
+              </Link>
+              <Link
+                to="/sign-up"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-semibold hover:from-cyan-400 hover:to-blue-500 transition-all"
+              >
+                <UserPlus className="w-4 h-4" />
+                S'inscrire
+              </Link>
+            </SignedOut>
+            <SignedIn>
+              <UserButton
+                appearance={{
+                  elements: {
+                    userButtonAvatarBox: 'w-8 h-8',
+                    userButtonTrigger: 'focus:shadow-none',
+                  },
+                }}
+              />
+            </SignedIn>
           </nav>
 
           {/* Cart */}
@@ -86,6 +113,34 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
+            <SignedOut>
+              <Link
+                to="/sign-in"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block py-3 px-4 rounded-lg text-sm font-medium text-gray-400 hover:bg-gray-900"
+              >
+                Connexion
+              </Link>
+              <Link
+                to="/sign-up"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block py-3 px-4 rounded-lg text-sm font-medium text-cyan-400 hover:bg-gray-900"
+              >
+                S'inscrire
+              </Link>
+            </SignedOut>
+            <SignedIn>
+              <div className="px-4 py-3 flex items-center gap-3 border-t border-gray-800 mt-2 pt-4">
+                <UserButton
+                  appearance={{
+                    elements: {
+                      userButtonAvatarBox: 'w-8 h-8',
+                    },
+                  }}
+                />
+                <span className="text-sm text-gray-400">Mon profil</span>
+              </div>
+            </SignedIn>
           </nav>
         )}
       </div>

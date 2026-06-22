@@ -2,11 +2,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Minus, Plus, Trash2, ArrowLeft, CreditCard, Tag, Loader2, CheckCircle } from 'lucide-react';
+import { ShoppingBag, Minus, Plus, Trash2, ArrowLeft, CreditCard, Tag, Loader2, CheckCircle, LogIn } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 import { checkout } from '../data/api';
+import { useUser } from '@clerk/clerk-react';
 
 export default function CartPage() {
+  const { user, isSignedIn } = useUser();
   const { items, removeFromCart, updateQuantity, clearCart, totalPrice, totalItems } = useCart();
   const [checkingOut, setCheckingOut] = useState(false);
   const [orderDone, setOrderDone] = useState(false);
@@ -16,9 +18,14 @@ export default function CartPage() {
     setCheckingOut(true);
     setOrderError('');
     try {
+      const customer = {
+        name: user?.fullName || user?.emailAddresses?.[0]?.emailAddress || 'Client',
+        email: user?.primaryEmailAddress?.emailAddress || 'client@example.com',
+        address: 'Paris, France',
+      };
       const result = await checkout(
         items.map(i => ({ id: i.id, name: i.name, price: i.price, quantity: i.quantity })),
-        { name: 'Client Test', email: 'client@example.com', address: 'Paris, France' }
+        customer
       );
       if (result.success) {
         setOrderDone(true);
@@ -196,7 +203,7 @@ export default function CartPage() {
                   <span className="text-green-400 font-semibold">Commande confirmée !</span>
                   <Link to="/" className="text-sm text-cyan-400 hover:underline">Continuer vos achats</Link>
                 </motion.div>
-              ) : (
+              ) : isSignedIn ? (
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -211,6 +218,14 @@ export default function CartPage() {
                   )}
                   {checkingOut ? 'Traitement...' : 'Passer la commande'}
                 </motion.button>
+              ) : (
+                <Link
+                  to="/sign-in"
+                  className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold hover:from-cyan-400 hover:to-blue-500 transition-all shadow-lg shadow-cyan-500/25"
+                >
+                  <LogIn className="w-5 h-5" />
+                  Connectez-vous pour commander
+                </Link>
               )}
 
               <p className="text-[11px] text-gray-600 text-center mt-4">
