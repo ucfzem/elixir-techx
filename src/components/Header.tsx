@@ -13,6 +13,7 @@ export default function Header() {
 
   const navLinks = [
     { to: '/', label: 'Accueil' },
+    { to: '/affiliate', label: 'Affiliation' },
     { to: '/account', label: 'Mon Compte' },
   ];
 

@@ -11,6 +11,7 @@ import AccountPage from './pages/AccountPage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import AdminPage from './pages/AdminPage';
+import AffiliatePage from './pages/AffiliatePage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -35,6 +36,7 @@ export default function App() {
               <Route path="/sign-in" element={<SignInPage />} />
               <Route path="/sign-up" element={<SignUpPage />} />
               <Route path="/admin" element={<AdminPage />} />
+              <Route path="/affiliate" element={<AffiliatePage />} />
             </Routes>
           </main>
 
@@ -54,13 +56,12 @@ export default function App() {
 
                 {/* Products */}
                 <div>
-                  <h4 className="text-sm font-semibold text-white mb-4">Catégories</h4>
+                  <h4 className="text-sm font-semibold text-white mb-4">Liens</h4>
                   <ul className="space-y-2">
-                    {['Tech & Gadgets', 'Beauté & Bien-être', 'Maison & Cuisine'].map(cat => (
-                      <li key={cat}>
-                        <a href="/" className="text-sm text-gray-500 hover:text-cyan-400 transition-colors">{cat}</a>
-                      </li>
-                    ))}
+                    <li><a href="/affiliate" className="text-sm text-gray-500 hover:text-cyan-400 transition-colors">Affiliation</a></li>
+                    <li><a href="/" className="text-sm text-gray-500 hover:text-cyan-400 transition-colors">Boutique</a></li>
+                    <li><a href="/cart" className="text-sm text-gray-500 hover:text-cyan-400 transition-colors">Panier</a></li>
+                    <li><a href="/account" className="text-sm text-gray-500 hover:text-cyan-400 transition-colors">Mon Compte</a></li>
                   </ul>
                 </div>
 
