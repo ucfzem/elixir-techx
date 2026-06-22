@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { useUser } from '@clerk/clerk-react';
 import { CartProvider } from './contexts/CartContext';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
@@ -9,6 +10,7 @@ import CartPage from './pages/CartPage';
 import AccountPage from './pages/AccountPage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
+import AdminPage from './pages/AdminPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -32,6 +34,7 @@ export default function App() {
               <Route path="/account" element={<AccountPage />} />
               <Route path="/sign-in" element={<SignInPage />} />
               <Route path="/sign-up" element={<SignUpPage />} />
+              <Route path="/admin" element={<AdminPage />} />
             </Routes>
           </main>
 

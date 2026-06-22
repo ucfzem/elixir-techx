@@ -2,11 +2,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { ShoppingCart, Cpu, Menu, X, LogIn, UserPlus } from 'lucide-react';
 import { useState } from 'react';
 import { useCart } from '../contexts/CartContext';
-import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, UserButton, useUser } from '@clerk/clerk-react';
 
 export default function Header() {
   const { totalItems } = useCart();
+  const { user } = useUser();
   const location = useLocation();
+  const isAdmin = user?.primaryEmailAddress?.emailAddress === 'azer.tyu199p@gmail.com';
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
@@ -61,6 +63,16 @@ export default function Header() {
               </Link>
             </SignedOut>
             <SignedIn>
+              {isAdmin && (
+                <Link
+                  to="/admin"
+                  className={`text-sm font-medium transition-all duration-300 hover:text-cyan-400 ${
+                    location.pathname === '/admin' ? 'text-cyan-400' : 'text-gray-400'
+                  }`}
+                >
+                  Admin
+                </Link>
+              )}
               <UserButton
                 appearance={{
                   elements: {
@@ -130,6 +142,15 @@ export default function Header() {
               </Link>
             </SignedOut>
             <SignedIn>
+              {isAdmin && (
+                <Link
+                  to="/admin"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block py-3 px-4 rounded-lg text-sm font-medium text-gray-400 hover:bg-gray-900"
+                >
+                  Admin
+                </Link>
+              )}
               <div className="px-4 py-3 flex items-center gap-3 border-t border-gray-800 mt-2 pt-4">
                 <UserButton
                   appearance={{
