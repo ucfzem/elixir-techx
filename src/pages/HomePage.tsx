@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Search, SlidersHorizontal, ArrowUpDown, Sparkles, Zap, Shield, Truck } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import SEO from '../components/SEO';
+import { WebSiteSchema, OrganizationSchema } from '../components/SchemaOrg';
 import { fetchProducts } from '../data/api';
 import type { Product } from '../data/products';
 
@@ -53,6 +54,8 @@ export default function HomePage() {
         path="/"
         keywords="elixir techx, gadgets pas chers, tech, beauté, maison, cuisine, maroc, e-commerce, dropshipping"
       />
+      <WebSiteSchema />
+      <OrganizationSchema />
       {/* Hero Section */}
       <section className="relative pt-24 pb-12 overflow-hidden">
         {/* Background effects */}

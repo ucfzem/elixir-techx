@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ShoppingCart, Package, Clock, ChevronRight, Check, Star, Shield, Truck, RotateCcw } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 import SEO from '../components/SEO';
+import { ProductSchema, BreadcrumbSchema } from '../components/SchemaOrg';
 import ProductCard from '../components/ProductCard';
 import { fetchProduct, fetchProducts } from '../data/api';
 import type { Product } from '../data/products';
@@ -78,23 +79,6 @@ export default function ProductPage() {
     );
   }
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: product.name,
-    description: product.description,
-    image: `https://elixir-techx.vercel.app${product.image_url}`,
-    category: product.category,
-    sku: `TECH-${product.id}`,
-    offers: {
-      '@type': 'Offer',
-      price: product.price,
-      priceCurrency: 'EUR',
-      availability: product.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-      url: `https://elixir-techx.vercel.app/product/${product.id}`,
-    },
-  };
-
   return (
     <div className="min-h-screen bg-gray-950">
       <SEO
@@ -104,7 +88,12 @@ export default function ProductPage() {
         image={product.image_url}
         keywords={`${product.category}, ${product.name}, tech store, acheter ${product.name.toLowerCase()}, prix ${product.name.toLowerCase()}`}
       />
-      <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+      <ProductSchema product={product} />
+      <BreadcrumbSchema items={[
+        { name: 'Accueil', url: '/' },
+        { name: product.category, url: '/' },
+        { name: product.name, url: `/product/${product.id}` },
+      ]} />
       {/* Breadcrumb */}
       <div className="pt-20 bg-gray-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
