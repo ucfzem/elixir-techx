@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import sql from './_db.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -12,33 +13,36 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Calculate total
     const subtotal = items.reduce((sum: number, item: { price: number; quantity: number }) =>
       sum + item.price * item.quantity, 0);
     const shipping = subtotal >= 50 ? 0 : 4.99;
     const total = subtotal + shipping;
 
-    // In production: create Stripe PaymentIntent & save order to DB here
-    // const paymentIntent = await stripe.paymentIntents.create({ ... });
+    const [order] = await sql`
+      INSERT INTO orders (customer_name, customer_email, customer_address, total, status)
+      VALUES (${customer.name}, ${customer.email}, ${customer.address}, ${total}, 'confirmed')
+      RETURNING id, customer_name, customer_email, total, status, created_at
+    `;
 
-    // Mock successful order
-    const order = {
-      id: Math.random().toString(36).slice(2),
-      items,
-      customer,
-      subtotal,
-      shipping,
-      total,
-      status: 'confirmed',
-      created_at: new Date().toISOString(),
-    };
+    for (const item of items) {
+      await sql`
+        INSERT INTO order_items (order_id, product_id, product_name, price, quantity)
+        VALUES (${order.id}, ${item.id}, ${item.name}, ${item.price}, ${item.quantity})
+      `;
+    }
 
     return res.json({
       success: true,
-      order,
-      // In production: clientSecret: paymentIntent.client_secret
+      order: {
+        ...order,
+        items,
+        subtotal,
+        shipping,
+        total,
+      },
     });
   } catch (err) {
+    console.error('Checkout error:', err);
     return res.status(500).json({ error: 'Internal server error' });
   }
 }
