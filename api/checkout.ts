@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import sql from './_db.js';
+import crypto from 'crypto';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -7,21 +8,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const { items, customer } = req.body;
+    const { items, customer, payment_method } = req.body;
 
     if (!items?.length || !customer?.email) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
+    const method = payment_method === 'cashplus' ? 'cashplus' : 'virement';
     const subtotal = items.reduce((sum: number, item: { price: number; quantity: number }) =>
       sum + item.price * item.quantity, 0);
     const shipping = subtotal >= 50 ? 0 : 4.99;
     const total = subtotal + shipping;
+    const payment_code = method === 'cashplus'
+      ? 'CP-' + crypto.randomBytes(4).toString('hex').toUpperCase()
+      : null;
 
     const [order] = await sql`
-      INSERT INTO orders (customer_name, customer_email, customer_address, total, status)
-      VALUES (${customer.name}, ${customer.email}, ${customer.address}, ${total}, 'pending_payment')
-      RETURNING id, customer_name, customer_email, total, status, created_at
+      INSERT INTO orders (customer_name, customer_email, customer_address, total, status, payment_method, payment_code)
+      VALUES (${customer.name}, ${customer.email}, ${customer.address}, ${total}, 'pending_payment', ${method}, ${payment_code})
+      RETURNING id, customer_name, customer_email, total, status, payment_method, payment_code, created_at
     `;
 
     for (const item of items) {

@@ -31,6 +31,8 @@ async function migrate() {
   await sql`CREATE INDEX IF NOT EXISTS idx_order_items_order_id ON order_items(order_id);`;
 
   await sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS tracking TEXT;`;
+  await sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS payment_method TEXT DEFAULT 'virement';`;
+  await sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS payment_code TEXT;`;
 
   console.log('Migration complete.');
 }

@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Minus, Plus, Trash2, ArrowLeft, CreditCard, Tag, Loader2, CheckCircle, LogIn, Clock, FileText, Building2, Copy } from 'lucide-react';
+import { ShoppingBag, Minus, Plus, Trash2, ArrowLeft, CreditCard, Tag, Loader2, CheckCircle, LogIn, Clock, FileText, Building2, Copy, Banknote, MapPin } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 import SEO from '../components/SEO';
 import { checkout } from '../data/api';
@@ -15,6 +15,8 @@ const BANK_DETAILS = {
   titulaire: 'Nom du titulaire',
 };
 
+type PaymentMethod = 'virement' | 'cashplus';
+
 export default function CartPage() {
   const { user, isSignedIn } = useUser();
   const { items, removeFromCart, updateQuantity, clearCart, totalPrice, totalItems } = useCart();
@@ -23,6 +25,8 @@ export default function CartPage() {
   const [orderId, setOrderId] = useState<number | null>(null);
   const [orderError, setOrderError] = useState('');
   const [copied, setCopied] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('virement');
+  const [paymentCode, setPaymentCode] = useState<string | null>(null);
 
   const handleCheckout = async () => {
     setCheckingOut(true);
@@ -35,10 +39,12 @@ export default function CartPage() {
       };
       const result = await checkout(
         items.map(i => ({ id: i.id, name: i.name, price: i.price, quantity: i.quantity })),
-        customer
+        customer,
+        paymentMethod
       );
       if (result.success) {
         setOrderId(result.order.id);
+        setPaymentCode(result.order.payment_code);
         setOrderDone(true);
         clearCart();
       }
@@ -224,72 +230,144 @@ export default function CartPage() {
                     )}
                   </div>
 
-                  {/* Bank Transfer Info */}
-                  <div className="rounded-xl bg-gray-900/70 border border-cyan-500/20 overflow-hidden">
-                    <div className="bg-gradient-to-r from-cyan-500/10 to-blue-600/10 px-4 py-3 border-b border-cyan-500/20">
-                      <div className="flex items-center gap-2 text-sm font-semibold text-cyan-400">
-                        <Building2 className="w-4 h-4" />
-                        Virement bancaire
+                  {paymentCode ? (
+                    /* Cash Plus Payment Info */
+                    <div className="rounded-xl bg-gray-900/70 border border-emerald-500/20 overflow-hidden">
+                      <div className="bg-gradient-to-r from-emerald-500/10 to-green-600/10 px-4 py-3 border-b border-emerald-500/20">
+                        <div className="flex items-center gap-2 text-sm font-semibold text-emerald-400">
+                          <Banknote className="w-4 h-4" />
+                          Cash Plus Payment
+                        </div>
                       </div>
-                    </div>
-                    <div className="p-4 space-y-3 text-sm">
-                      <p className="text-xs text-gray-500 leading-relaxed">
-                        Veuillez transférer le montant total sur le compte ci-dessous.
-                        Votre commande sera traitée dès réception du virement.
-                      </p>
-                      {[
-                        { label: 'Banque', value: BANK_DETAILS.bank, key: 'bank' },
-                        { label: 'RIB', value: BANK_DETAILS.rib, key: 'rib' },
-                        { label: 'IBAN', value: BANK_DETAILS.iban, key: 'iban' },
-                        { label: 'Titulaire', value: BANK_DETAILS.titulaire, key: 'titulaire' },
-                      ].map(field => (
-                        <div key={field.key} className="flex items-center justify-between gap-2">
-                          <span className="text-gray-500 text-xs">{field.label}</span>
-                          <div className="flex items-center gap-1.5">
-                            <span className="text-white font-mono text-xs">{field.value}</span>
+                      <div className="p-4 space-y-3 text-sm">
+                        <p className="text-xs text-gray-500 leading-relaxed">
+                          Rendez-vous dans <strong>n'importe quelle agence Cash Plus</strong> avec ce code de paiement.
+                        </p>
+                        <div className="flex flex-col items-center gap-2 py-4">
+                          <div className="text-[10px] text-gray-600 uppercase tracking-widest">Code de paiement</div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-2xl font-black tracking-widest text-emerald-400 font-mono bg-gray-950 px-4 py-2 rounded-xl border border-emerald-500/30">
+                              {paymentCode}
+                            </span>
                             <button
-                              onClick={() => { navigator.clipboard.writeText(field.value); setCopied(field.key); setTimeout(() => setCopied(''), 1500); }}
-                              className="p-1 rounded text-gray-600 hover:text-cyan-400 transition-colors"
+                              onClick={() => { navigator.clipboard.writeText(paymentCode); setCopied('code'); setTimeout(() => setCopied(''), 1500); }}
+                              className="p-2 rounded-lg text-gray-600 hover:text-emerald-400 transition-colors"
                             >
-                              {copied === field.key ? <CheckCircle className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
+                              {copied === 'code' ? <CheckCircle className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
                             </button>
                           </div>
+                          <div className="text-[10px] text-gray-600 mt-1">
+                            Montant : <span className="text-emerald-400 font-bold">{totalWithShipping.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}</span>
+                          </div>
                         </div>
-                      ))}
-                      <div className="flex justify-between pt-2 border-t border-gray-800">
-                        <span className="text-gray-500 text-xs">Montant</span>
-                        <span className="text-cyan-400 font-bold text-sm">
-                          {totalWithShipping.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
-                        </span>
+                        <div className="flex items-start gap-2 p-3 rounded-xl bg-gray-950/50 border border-gray-800">
+                          <MapPin className="w-4 h-4 text-gray-500 mt-0.5 shrink-0" />
+                          <p className="text-xs text-gray-500 leading-relaxed">
+                            Présentez ce code à un agent Cash Plus. Votre commande sera traitée dès réception du paiement.
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  ) : (
+                    /* Bank Transfer Info */
+                    <div className="rounded-xl bg-gray-900/70 border border-cyan-500/20 overflow-hidden">
+                      <div className="bg-gradient-to-r from-cyan-500/10 to-blue-600/10 px-4 py-3 border-b border-cyan-500/20">
+                        <div className="flex items-center gap-2 text-sm font-semibold text-cyan-400">
+                          <Building2 className="w-4 h-4" />
+                          Virement bancaire
+                        </div>
+                      </div>
+                      <div className="p-4 space-y-3 text-sm">
+                        <p className="text-xs text-gray-500 leading-relaxed">
+                          Veuillez transférer le montant total sur le compte ci-dessous.
+                          Votre commande sera traitée dès réception du virement.
+                        </p>
+                        {[
+                          { label: 'Banque', value: BANK_DETAILS.bank, key: 'bank' },
+                          { label: 'RIB', value: BANK_DETAILS.rib, key: 'rib' },
+                          { label: 'IBAN', value: BANK_DETAILS.iban, key: 'iban' },
+                          { label: 'Titulaire', value: BANK_DETAILS.titulaire, key: 'titulaire' },
+                        ].map(field => (
+                          <div key={field.key} className="flex items-center justify-between gap-2">
+                            <span className="text-gray-500 text-xs">{field.label}</span>
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-white font-mono text-xs">{field.value}</span>
+                              <button
+                                onClick={() => { navigator.clipboard.writeText(field.value); setCopied(field.key); setTimeout(() => setCopied(''), 1500); }}
+                                className="p-1 rounded text-gray-600 hover:text-cyan-400 transition-colors"
+                              >
+                                {copied === field.key ? <CheckCircle className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                        <div className="flex justify-between pt-2 border-t border-gray-800">
+                          <span className="text-gray-500 text-xs">Montant</span>
+                          <span className="text-cyan-400 font-bold text-sm">
+                            {totalWithShipping.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   <div className="flex items-start gap-2 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
                     <Clock className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
                     <p className="text-xs text-amber-300 leading-relaxed">
-                      <strong>Paiement en attente.</strong> Envoyez la preuve de virement
-                      par email à <strong>contact@elixir-techx.ma</strong> pour accélérer le traitement.
+                      <strong>Paiement en attente.</strong>
+                      {paymentCode
+                        ? ' Effectuez le paiement en agence Cash Plus pour valider votre commande.'
+                        : ' Envoyez la preuve de virement par email à contact@elixir-techx.ma pour accélérer le traitement.'}
                     </p>
                   </div>
 
                   <Link to="/" className="text-sm text-cyan-400 hover:underline font-medium text-center">Continuer vos achats</Link>
                 </motion.div>
               ) : isSignedIn ? (
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={handleCheckout}
-                  disabled={checkingOut}
-                  className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold hover:from-cyan-400 hover:to-blue-500 transition-all shadow-lg shadow-cyan-500/25 disabled:opacity-50"
-                >
-                  {checkingOut ? (
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                  ) : (
-                    <CreditCard className="w-5 h-5" />
-                  )}
-                  {checkingOut ? 'Traitement...' : 'Passer la commande'}
-                </motion.button>
+                <div className="flex flex-col gap-3">
+                  {/* Payment Method Selector */}
+                  <div className="rounded-xl bg-gray-900/50 border border-gray-800/50 p-3">
+                    <p className="text-xs text-gray-500 uppercase tracking-wider mb-2">Mode de paiement</p>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        onClick={() => setPaymentMethod('virement')}
+                        className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border transition-all ${
+                          paymentMethod === 'virement'
+                            ? 'bg-cyan-500/10 border-cyan-500/40 text-cyan-400'
+                            : 'bg-gray-900 border-gray-800 text-gray-500 hover:border-gray-700'
+                        }`}
+                      >
+                        <Building2 className="w-5 h-5" />
+                        <span className="text-[11px] font-medium">Virement</span>
+                      </button>
+                      <button
+                        onClick={() => setPaymentMethod('cashplus')}
+                        className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border transition-all ${
+                          paymentMethod === 'cashplus'
+                            ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-400'
+                            : 'bg-gray-900 border-gray-800 text-gray-500 hover:border-gray-700'
+                        }`}
+                      >
+                        <Banknote className="w-5 h-5" />
+                        <span className="text-[11px] font-medium">Cash Plus</span>
+                      </button>
+                    </div>
+                  </div>
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={handleCheckout}
+                    disabled={checkingOut}
+                    className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold hover:from-cyan-400 hover:to-blue-500 transition-all shadow-lg shadow-cyan-500/25 disabled:opacity-50"
+                  >
+                    {checkingOut ? (
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : (
+                      <CreditCard className="w-5 h-5" />
+                    )}
+                    {checkingOut ? 'Traitement...' : 'Passer la commande'}
+                  </motion.button>
+                </div>
               ) : (
                 <Link
                   to="/sign-in"

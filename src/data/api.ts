@@ -30,11 +30,11 @@ export async function fetchCustomers(): Promise<Customer[]> {
   return res.json();
 }
 
-export async function checkout(items: { id: number; name: string; price: number; quantity: number }[], customer: { name: string; email: string; address: string }) {
+export async function checkout(items: { id: number; name: string; price: number; quantity: number }[], customer: { name: string; email: string; address: string }, payment_method?: string) {
   const res = await fetch(`${API_BASE}/checkout`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ items, customer }),
+    body: JSON.stringify({ items, customer, payment_method }),
   });
   if (!res.ok) throw new Error('Checkout failed');
   return res.json();

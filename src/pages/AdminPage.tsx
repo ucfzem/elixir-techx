@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ShoppingBag, Mail, MapPin, TrendingUp, DollarSign, Package, Clock, ChevronDown, ChevronUp, Loader2, Truck, CheckCircle, ExternalLink, Send } from 'lucide-react';
+import { ShoppingBag, Mail, MapPin, TrendingUp, DollarSign, Package, Clock, ChevronDown, ChevronUp, Loader2, Truck, CheckCircle, ExternalLink, Send, Banknote } from 'lucide-react';
 import SEO from '../components/SEO';
 
 type OrderItem = {
@@ -18,6 +18,8 @@ type Order = {
   total: number;
   status: string;
   tracking: string | null;
+  payment_method: string;
+  payment_code: string | null;
   created_at: string;
   items: OrderItem[];
 };
@@ -190,6 +192,24 @@ export default function AdminPage() {
                       {/* Address */}
                       <div className="flex items-center gap-2 text-xs text-gray-500 bg-gray-900/50 rounded-xl px-3 py-2">
                         <MapPin className="w-3.5 h-3.5 text-gray-600" /> {order.customer_address}
+                      </div>
+
+                      {/* Payment Method */}
+                      <div className="flex items-center gap-2 text-xs bg-gray-900/50 rounded-xl px-3 py-2">
+                        {order.payment_method === 'cashplus' ? (
+                          <>
+                            <Banknote className="w-3.5 h-3.5 text-emerald-400" />
+                            <span className="text-emerald-400 font-medium">Cash Plus</span>
+                            {order.payment_code && (
+                              <span className="text-emerald-400/60 font-mono ml-1">Code: {order.payment_code}</span>
+                            )}
+                          </>
+                        ) : (
+                          <>
+                            <Banknote className="w-3.5 h-3.5 text-cyan-400" />
+                            <span className="text-cyan-400 font-medium">Virement bancaire</span>
+                          </>
+                        )}
                       </div>
 
                       {/* Items */}
