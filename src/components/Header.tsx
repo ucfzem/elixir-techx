@@ -28,12 +28,12 @@ export default function Header() {
               <div className="absolute inset-0 bg-cyan-400/20 blur-lg rounded-full group-hover:bg-cyan-300/30 transition-colors" />
             </div>
             <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
-              TechStore
+              Élixir-tech
             </span>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-8">
             {navLinks.map(link => (
               <Link
                 key={link.to}
@@ -102,7 +102,7 @@ export default function Header() {
             {/* Mobile menu button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-gray-400 hover:text-cyan-400 transition-colors tv-focus rounded-lg"
+              className="lg:hidden p-2 text-gray-400 hover:text-cyan-400 transition-colors tv-focus rounded-lg"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -111,7 +111,7 @@ export default function Header() {
 
         {/* Mobile Nav */}
         {mobileMenuOpen && (
-          <nav className="md:hidden py-4 border-t border-gray-800">
+          <nav className="lg:hidden py-4 border-t border-gray-800">
             {navLinks.map(link => (
               <Link
                 key={link.to}
