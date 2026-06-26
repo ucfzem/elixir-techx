@@ -125,6 +125,7 @@ export default function CartPage() {
                       src={item.image_url}
                       alt={item.name}
                       className="w-24 h-24 rounded-xl object-cover bg-gray-800"
+                      loading="lazy"
                       onError={e => { (e.target as HTMLImageElement).src = '/images/placeholder.svg' }}
                     />
                   </Link>
