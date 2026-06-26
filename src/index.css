@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* ─── TV Remote & Focus-Visible System ─── */
+/* ─── Focus-Visible TV Remote System ─── */
 @media (hover: hover) and (pointer: fine) {
   *:focus-visible {
     outline: 2px solid oklch(70% 0.2 195);
@@ -9,14 +9,12 @@
   }
 }
 
-/* TV-safe focus ring with glow for interactive elements */
 .tv-focus:focus-visible {
   outline: 2px solid oklch(70% 0.2 195);
   outline-offset: 3px;
   box-shadow: 0 0 0 4px oklch(70% 0.2 195 / 0.25), 0 0 20px oklch(70% 0.2 195 / 0.15);
 }
 
-/* Larger click targets for TV remotes */
 @media (pointer: coarse) {
   button, a, [role="button"], input[type="checkbox"], input[type="radio"] {
     min-height: 48px;
@@ -24,15 +22,50 @@
   }
 }
 
-/* ─── TV / Large Screen Typography Scaling ─── */
-@media (min-width: 1536px) {
-  html {
-    font-size: 18px;
-  }
-}
-
+/* ─── TV / Large Screen Overrides (1920px+) ─── */
 @media (min-width: 1920px) {
-  html {
-    font-size: 20px;
+  /* Hero title */
+  h1 {
+    font-size: 4.5rem !important;
+    line-height: 1.05 !important;
+  }
+
+  /* Section titles (h2) */
+  h2 {
+    font-size: 2.75rem !important;
+  }
+
+  /* Body text */
+  p, span, a, label, li, td, th, div {
+    line-height: 1.7;
+  }
+
+  /* Product grid: force 6 columns */
+  .grid.grid-cols-1 {
+    grid-template-columns: repeat(6, 1fr) !important;
+  }
+
+  /* Features bar: 3 cols on TV */
+  .grid.grid-cols-1.sm\:grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* Product card image height */
+  .h-52, .h-56 {
+    height: 20rem !important;
+  }
+
+  /* Larger product card text */
+  .text-xl {
+    font-size: 1.75rem !important;
+  }
+  .text-base {
+    font-size: 1.125rem !important;
+  }
+  .text-sm {
+    font-size: 1rem !important;
+  }
+  .text-xs {
+    font-size: 0.875rem !important;
   }
 }
