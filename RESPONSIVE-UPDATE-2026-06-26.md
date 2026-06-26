@@ -1,42 +1,56 @@
-# Elixir Techx — Responsive Design Update (June 26, 2026)
+# Responsive & TV Remote Fixes — 2026-06-26
 
-## Changes Made
+## Summary
+Applied comprehensive responsive design fixes across all screen sizes (phone, tablet, PC, TV) with TV remote-friendly navigation for the Elixir TechX store.
 
-### Focus-visible TV Remote System (`src/index.css`)
-- Added `.tv-focus` class with cyan glow outline for keyboard/D-pad navigation
-- Global `focus-visible` ring on all interactive elements
-- `pointer:coarse` media query: 48px min touch targets for TV remotes
+## Changes
 
-### Typography Scaling
-- `2xl` (1536px+): base font size 18px
-- `3xl` (1920px+): base font size 20px
-- `App.tsx`: body text `text-base xl:text-lg`
+### `src/index.css`
+- **Focus-visible system**: `tv-focus` class with cyan glow for keyboard/TV navigation
+- **Touch targets**: 48px min-height/width on coarse pointer devices
+- **Filter scrollbar hidden**: `scrollbar-width: none` + WebKit scrollbar hide for category tabs
+- **Tiny screen overflow prevention**: Force single-column grid below 400px
+- **TV overrides (1920px+)**: Scaled typography, 6-col product grid, larger images
 
-### Container Expansion
-- All `max-w-7xl` containers now expand:
-  - `xl: max-w-[1400px]`
-  - `2xl: max-w-[1800px]`
-- Applied to: Header, HomePage, ProductPage, CartPage, AccountPage, AdminPage, AffiliatePage, Footer
+### `src/App.tsx`
+- Global text scaling (`text-base xl:text-lg`)
+- Expanded footer container (`xl:max-w-[1400px] 2xl:max-w-[1800px]`)
 
-### Files Modified (10)
-1. `src/index.css` — focus-visible CSS, TV typography scaling
-2. `src/App.tsx` — font scaling, footer container expansion
-3. `src/components/Header.tsx` — tv-focus on logo, nav links, cart, hamburger
-4. `src/components/ProductCard.tsx` — tv-focus on card link
-5. `src/pages/HomePage.tsx` — expanded containers
-6. `src/pages/ProductPage.tsx` — tv-focus on add-to-cart button, expanded containers
-7. `src/pages/CartPage.tsx` — tv-focus on quantity controls, checkout button
-8. `src/pages/AffiliatePage.tsx` — tv-focus on filter tabs, product cards
-9. `src/pages/AccountPage.tsx` — tv-focus on buttons, expanded container
-10. `src/pages/AdminPage.tsx` — expanded container
+### `src/components/Header.tsx`
+- `tv-focus` on logo, nav links, cart button, hamburger
+- Expanded container max-width
 
-### Images — Untouched
-- 30 local product images in `public/images/` — zero changes
-- 12 affiliate external URLs (picsum.photos) — zero changes
-- `placeholder.svg` — zero changes
+### `src/components/ProductCard.tsx`
+- `tv-focus rounded-2xl` on card link
+- `loading="lazy"` already present
 
-### Deployment
-- Commit: `23e4349`
-- Branch: `main`
-- Vercel: https://elixir-techx.vercel.app
-- GitHub Pages: https://ucfzem.github.io/elixir-techx/
+### `src/pages/HomePage.tsx`
+- `2xl:grid-cols-5` for product grid
+- Expanded all `max-w-7xl` containers to `xl:max-w-[1400px] 2xl:max-w-[1800px]`
+
+### `src/pages/ProductPage.tsx`
+- `tv-focus` on add-to-cart button
+- Expanded container max-width
+
+### `src/pages/CartPage.tsx`
+- `tv-focus` on quantity +/- buttons and checkout button
+- `loading="lazy"` on cart thumbnail images
+- Expanded container max-width
+
+### `src/pages/AffiliatePage.tsx`
+- `tv-focus` on filter tabs and product cards
+- `replaceAll` max-w-7xl expanded
+
+### `src/pages/AccountPage.tsx`
+- `tv-focus` on sign-out and action buttons
+
+### `src/pages/AdminPage.tsx`
+- Expanded container max-width
+
+## Commits
+- `e0e4f24` — Initial responsive/TV fixes
+- `6f3f70a` — Responsive polish: hide filter scrollbar, lazy-load cart thumbnails, prevent overflow on tiny screens
+
+## Deployment
+- **Vercel**: https://elixir-techx.vercel.app/ (production)
+- **Deploy ID**: `dpl_GtAzw3WH6NGbWQqqDnarMNxcYiDX`
