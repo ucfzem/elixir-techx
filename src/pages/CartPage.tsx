@@ -87,7 +87,7 @@ export default function CartPage() {
   return (
     <div className="min-h-screen bg-gray-950 pt-24 pb-16">
       <SEO title="Panier" description="Votre panier TechStore — révisez vos articles avant de passer commande." path="/cart" />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -151,14 +151,14 @@ export default function CartPage() {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          className="w-7 h-7 rounded-lg bg-gray-800 border border-gray-700 text-gray-400 hover:text-white flex items-center justify-center text-sm transition-all"
+                          className="w-7 h-7 rounded-lg bg-gray-800 border border-gray-700 text-gray-400 hover:text-white flex items-center justify-center text-sm transition-all tv-focus"
                         >
                           <Minus className="w-3 h-3" />
                         </button>
                         <span className="w-8 text-center text-sm font-semibold text-white">{item.quantity}</span>
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="w-7 h-7 rounded-lg bg-gray-800 border border-gray-700 text-gray-400 hover:text-white flex items-center justify-center text-sm transition-all"
+                          className="w-7 h-7 rounded-lg bg-gray-800 border border-gray-700 text-gray-400 hover:text-white flex items-center justify-center text-sm transition-all tv-focus"
                         >
                           <Plus className="w-3 h-3" />
                         </button>
@@ -358,7 +358,7 @@ export default function CartPage() {
                     whileTap={{ scale: 0.98 }}
                     onClick={handleCheckout}
                     disabled={checkingOut}
-                    className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold hover:from-cyan-400 hover:to-blue-500 transition-all shadow-lg shadow-cyan-500/25 disabled:opacity-50"
+                    className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold hover:from-cyan-400 hover:to-blue-500 transition-all shadow-lg shadow-cyan-500/25 disabled:opacity-50 tv-focus"
                   >
                     {checkingOut ? (
                       <Loader2 className="w-5 h-5 animate-spin" />

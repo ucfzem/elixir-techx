@@ -19,7 +19,7 @@ export default function AccountPage() {
 
   return (
     <div className="min-h-screen bg-gray-950 pt-24 pb-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8">
         <SEO title="Mon Compte" description="Gérez votre profil TechStore, vos commandes et vos informations personnelles." path="/account" />
         <SignedOut>
           <motion.div
@@ -57,7 +57,7 @@ export default function AccountPage() {
               </div>
               <button
                 onClick={() => { signOut(); navigate('/'); }}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-900 border border-gray-800 text-sm text-gray-400 hover:text-red-400 hover:border-red-500/30 transition-all"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-900 border border-gray-800 text-sm text-gray-400 hover:text-red-400 hover:border-red-500/30 transition-all tv-focus"
               >
                 <LogOut className="w-4 h-4" />
                 Déconnexion
@@ -164,7 +164,7 @@ export default function AccountPage() {
                     <div className="grid grid-cols-2 gap-2">
                       <Link
                         to="/cart"
-                        className="flex items-center justify-center gap-2 p-2.5 rounded-xl bg-gray-900 border border-gray-800 text-xs text-gray-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all"
+                        className="flex items-center justify-center gap-2 p-2.5 rounded-xl bg-gray-900 border border-gray-800 text-xs text-gray-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all tv-focus"
                       >
                         <ShoppingBag className="w-3.5 h-3.5" />
                         Mon panier

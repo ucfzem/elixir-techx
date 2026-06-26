@@ -27,7 +27,7 @@ export default function AffiliatePage() {
       {/* Hero */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 via-transparent to-transparent" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative">
+        <div className="max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 mb-6">
               <Percent className="w-4 h-4 text-amber-400" />
@@ -46,7 +46,7 @@ export default function AffiliatePage() {
       </div>
 
       {/* Benefits */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+      <div className="max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 mb-12">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {affiliateBenefits.map((b, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
@@ -61,7 +61,7 @@ export default function AffiliatePage() {
       </div>
 
       {/* Platforms */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+      <div className="max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {affiliatePlatforms.map((p, i) => (
             <motion.a key={i} href={p.signupUrl} target="_blank" rel="noopener noreferrer" initial={{ opacity: 0, x: i === 0 ? -20 : 20 }} animate={{ opacity: 1, x: 0 }}
@@ -83,11 +83,11 @@ export default function AffiliatePage() {
       </div>
 
       {/* Filter tabs */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+      <div className="max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 mb-6">
         <div className="flex items-center gap-2 border-b border-gray-800/50 pb-3">
           {(['all', 'aliexpress', 'temu'] as const).map(f => (
             <button key={f} onClick={() => setFilter(f)}
-              className={`px-4 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all ${
+              className={`px-4 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all tv-focus ${
                 filter === f
                   ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'
                   : 'text-gray-500 hover:text-gray-300 border border-transparent'
@@ -100,7 +100,7 @@ export default function AffiliatePage() {
       </div>
 
       {/* Products grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div variants={container} initial="hidden" animate="show" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           {filtered.map((product) => (
             <motion.a
@@ -111,7 +111,7 @@ export default function AffiliatePage() {
               rel="noopener noreferrer"
               onMouseEnter={() => setHoveredId(product.id)}
               onMouseLeave={() => setHoveredId(null)}
-              className="group relative rounded-2xl bg-gray-900/50 border border-gray-800/50 hover:border-cyan-500/30 overflow-hidden transition-all duration-300"
+              className="group relative rounded-2xl bg-gray-900/50 border border-gray-800/50 hover:border-cyan-500/30 overflow-hidden transition-all duration-300 tv-focus"
             >
               {/* Badge */}
               {product.badge && (

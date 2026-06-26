@@ -1,1 +1,38 @@
 @import "tailwindcss";
+
+/* ─── TV Remote & Focus-Visible System ─── */
+@media (hover: hover) and (pointer: fine) {
+  *:focus-visible {
+    outline: 2px solid oklch(70% 0.2 195);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+}
+
+/* TV-safe focus ring with glow for interactive elements */
+.tv-focus:focus-visible {
+  outline: 2px solid oklch(70% 0.2 195);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px oklch(70% 0.2 195 / 0.25), 0 0 20px oklch(70% 0.2 195 / 0.15);
+}
+
+/* Larger click targets for TV remotes */
+@media (pointer: coarse) {
+  button, a, [role="button"], input[type="checkbox"], input[type="radio"] {
+    min-height: 48px;
+    min-width: 48px;
+  }
+}
+
+/* ─── TV / Large Screen Typography Scaling ─── */
+@media (min-width: 1536px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1920px) {
+  html {
+    font-size: 20px;
+  }
+}

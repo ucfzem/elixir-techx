@@ -56,7 +56,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05, duration: 0.4 }}
     >
-      <Link to={`/product/${product.id}`} className="group block h-full">
+      <Link to={`/product/${product.id}`} className="group block h-full tv-focus rounded-2xl">
         <div className="relative h-full bg-gradient-to-b from-gray-900 to-gray-950 rounded-2xl border border-gray-800/50 overflow-hidden hover:border-cyan-500/50 transition-all duration-500 hover:shadow-[0_0_40px_rgba(6,182,212,0.15)]">
           {/* Image */}
           <div className="relative h-52 sm:h-56 overflow-hidden bg-gray-900">

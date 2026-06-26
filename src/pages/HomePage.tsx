@@ -65,7 +65,7 @@ export default function HomePage() {
           <div className="absolute top-40 right-1/3 w-64 h-64 bg-blue-500/8 rounded-full blur-[100px]" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -76,7 +76,7 @@ export default function HomePage() {
               <span className="text-sm font-medium text-cyan-400">💰 Jusqu'à -80% vs les marques — Livraison Maroc & Europe</span>
             </div>
             
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-4 leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black text-white mb-4 leading-tight">
               Les meilleurs{' '}
               <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
                 petits prix
@@ -111,7 +111,7 @@ export default function HomePage() {
 
       {/* Filters Bar */}
       <section className="sticky top-16 z-40 bg-gray-950/95 backdrop-blur-xl border-y border-gray-800/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             {/* Search */}
             <div className="relative flex-1 w-full sm:max-w-md">
@@ -194,9 +194,9 @@ export default function HomePage() {
       </section>
 
       {/* Products Grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <section className="max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
             {[...Array(8)].map((_, i) => (
               <div key={i} className="animate-pulse">
                 <div className="h-56 bg-gray-900 rounded-t-2xl" />
@@ -225,7 +225,7 @@ export default function HomePage() {
                 <span className="text-cyan-400 font-semibold">{products.length}</span> produits trouvés
               </p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
               {products.map((product, i) => (
                 <ProductCard key={product.id} product={product} index={i} />
               ))}

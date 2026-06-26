@@ -19,10 +19,10 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-gray-950/90 backdrop-blur-xl border-b border-cyan-500/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
+          <Link to="/" className="flex items-center gap-2 group tv-focus rounded-xl">
             <div className="relative">
               <Cpu className="w-8 h-8 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
               <div className="absolute inset-0 bg-cyan-400/20 blur-lg rounded-full group-hover:bg-cyan-300/30 transition-colors" />
@@ -38,7 +38,7 @@ export default function Header() {
               <Link
                 key={link.to}
                 to={link.to}
-                className={`text-sm font-medium transition-all duration-300 hover:text-cyan-400 ${
+                className={`text-sm font-medium transition-all duration-300 hover:text-cyan-400 tv-focus rounded-lg px-2 py-1 ${
                   location.pathname === link.to
                     ? 'text-cyan-400'
                     : 'text-gray-400'
@@ -50,14 +50,14 @@ export default function Header() {
             <SignedOut>
               <Link
                 to="/sign-in"
-                className="flex items-center gap-1.5 text-sm font-medium text-gray-400 hover:text-cyan-400 transition-colors"
+                className="flex items-center gap-1.5 text-sm font-medium text-gray-400 hover:text-cyan-400 transition-colors tv-focus rounded-lg px-2 py-1"
               >
                 <LogIn className="w-4 h-4" />
                 Connexion
               </Link>
               <Link
                 to="/sign-up"
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-semibold hover:from-cyan-400 hover:to-blue-500 transition-all"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-semibold hover:from-cyan-400 hover:to-blue-500 transition-all tv-focus"
               >
                 <UserPlus className="w-4 h-4" />
                 S'inscrire
@@ -67,7 +67,7 @@ export default function Header() {
               {isAdmin && (
                 <Link
                   to="/admin"
-                  className={`text-sm font-medium transition-all duration-300 hover:text-cyan-400 ${
+                  className={`text-sm font-medium transition-all duration-300 hover:text-cyan-400 tv-focus rounded-lg px-2 py-1 ${
                     location.pathname === '/admin' ? 'text-cyan-400' : 'text-gray-400'
                   }`}
                 >
@@ -89,7 +89,7 @@ export default function Header() {
           <div className="flex items-center gap-4">
             <Link
               to="/cart"
-              className="relative p-2 rounded-xl bg-gray-900/50 border border-gray-800 hover:border-cyan-500/50 transition-all duration-300 group"
+              className="relative p-2 rounded-xl bg-gray-900/50 border border-gray-800 hover:border-cyan-500/50 transition-all duration-300 group tv-focus"
             >
               <ShoppingCart className="w-5 h-5 text-gray-400 group-hover:text-cyan-400 transition-colors" />
               {totalItems > 0 && (
@@ -102,7 +102,7 @@ export default function Header() {
             {/* Mobile menu button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-gray-400 hover:text-cyan-400 transition-colors"
+              className="md:hidden p-2 text-gray-400 hover:text-cyan-400 transition-colors tv-focus rounded-lg"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>

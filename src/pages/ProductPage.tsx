@@ -96,7 +96,7 @@ export default function ProductPage() {
       ]} />
       {/* Breadcrumb */}
       <div className="pt-20 bg-gray-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <nav className="flex items-center gap-2 text-sm text-gray-500">
             <Link to="/" className="hover:text-cyan-400 transition-colors">Accueil</Link>
             <ChevronRight className="w-4 h-4" />
@@ -108,7 +108,7 @@ export default function ProductPage() {
       </div>
 
       {/* Product Detail */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <section className="max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -139,7 +139,7 @@ export default function ProductPage() {
           {/* Info */}
           <div className="flex flex-col">
             <div className="mb-6">
-              <h1 className="text-3xl sm:text-4xl font-black text-white mb-3 leading-tight">
+              <h1 className="text-3xl sm:text-4xl xl:text-5xl font-black text-white mb-3 leading-tight">
                 {product.name}
               </h1>
               
@@ -218,7 +218,7 @@ export default function ProductPage() {
               whileTap={{ scale: 0.98 }}
               onClick={handleAddToCart}
               disabled={product.stock === 0 || addedToCart}
-              className={`w-full flex items-center justify-center gap-3 py-4 rounded-2xl text-base font-bold transition-all duration-300 mb-6 ${
+              className={`w-full flex items-center justify-center gap-3 py-4 rounded-2xl text-base font-bold transition-all duration-300 mb-6 tv-focus ${
                 addedToCart
                   ? 'bg-green-500 text-white'
                   : product.stock === 0
@@ -258,7 +258,7 @@ export default function ProductPage() {
 
       {/* Related Products */}
       {relatedProducts.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-800/50">
+        <section className="max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-800/50">
           <h2 className="text-2xl font-bold text-white mb-8">Produits similaires</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {relatedProducts.map((p, i) => (
